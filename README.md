@@ -75,4 +75,9 @@ To be continued...
 - The *KubernetesClientCode* is 
 [here](https://github.com/bolan2014/KubernetesClientCode).
 - We are really stuck on the ERROR that **Too many connections** raised by the mariadb in CentOS 7. It could occur at any time, such as the process of *stack.sh* or running some commands (like *magnum bay-create* or *nova list*). We can temporary solve this by restart the mariadb.service in CentOS 7, but for **magnum bay-create** which takes long time, the bug of mariadb in CentOS 7 could make it fail to process.
-- We faild to install Ubuntu on our server last week. Now we will quickly re-install the server with Ubuntu with the server provider's support. Hope to have a nice weekend!    
+- We faild to install Ubuntu on our server last week. Now we will quickly re-install the server with Ubuntu with the server provider's support. Hope to have a nice weekend! 
+
+*2015.9.27*
+
+- We have manually tried to create two kinds of nodes (master node and minion nodes) by senlin node-create with two kinds of profiles created before. The template property in spec file of two kinds of profiles are temporarily [master.yaml](https://github.com/openstack/magnum/blob/master/magnum/templates/heat-kubernetes/kubemaster.yaml) and [minion.yaml](https://github.com/openstack/magnum/blob/master/magnum/templates/heat-kubernetes/kubeminion.yaml). And all creation is successful!
+- When we create profile with type os.heat.stack, the parameters needed by template should be added to spec file. I think senlin profile-create should add a new argument -P which means parameters and pass these parameters to [here](https://github.com/stackforge/senlin/blob/master/senlin/profiles/os/heat/stack.py#L130).
