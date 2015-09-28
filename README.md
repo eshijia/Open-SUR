@@ -84,4 +84,4 @@ To be continued...
 
 *2015.9.28*
 
-- Using Docker to install Spark is [here](https://github.com/bolan2014/docker-scripts).
+- Using k8s to install Spark is [here](https://github.com/kubernetes/kubernetes/tree/master/examples/spark).
