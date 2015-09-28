@@ -4,7 +4,7 @@
 
 Our test server environment is described as follows:
 
-- **OS**: CentOS 7
+- **OS**: Ubuntu Server 14.04
 - **Memory**: 256 GB
 - **NIC**: Single network interface
 
