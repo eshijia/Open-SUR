@@ -28,12 +28,15 @@ Then, create the `local.conf` file in the root directory of devstack. Our local.
     RABBIT_PASSWORD=stack
     SERVICE_PASSWORD=$ADMIN_PASSWORD
     
+    PUBLIC_INTERFACE=em4
     enable_plugin magnum https://git.openstack.org/openstack/magnum
     VOLUME_BACKING_FILE_SIZE=20G
 
+    enable_plugin ceilometer https://git.openstack.org/openstack/ceilometer
+
     enable_plugin senlin https://git.openstack.org/stackforge/senlin
 
-*Note:* If you just have single network interface, you should not set something like `PUBLIC_INTERFACE=eth1`.
+*Note:* If you just have single network interface, you should not set something like `PUBLIC_INTERFACE=eth1` in **CentOS 7**. What we have done has not been tested successfully in CentOS 7.
 
 After that, you can `cd /opt/stack/devstack`, then `./stack.sh`
 
