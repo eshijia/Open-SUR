@@ -1,4 +1,4 @@
-## Magnum-Senlin ##
+## SUR-Project ##
 
 ### Environment ###
 
@@ -38,9 +38,13 @@ Then, create the `local.conf` file in the root directory of devstack. Our local.
 
 *Note:* If you just have single network interface, you should not set something like `PUBLIC_INTERFACE=eth1` in **CentOS 7**. What we have done has not been tested successfully in CentOS 7.
 
-After that, you can `cd /opt/stack/devstack`, then `./stack.sh`
+After that, you can `cd /opt/stack/devstack`, then `./stack.sh` to whether you environment is reaaly ok with the typical code base.
 
 ### Checkout our test code ###
+
+####Method 1####
+
+Note that, method 1 healily relies on you current code of **devstack**. If you are first run our code, I think maybe you should follow method 2.
 
 We maintain a test branch of **Magnum** on Github. If you can use devstack with the local.conf above, it proves that you environment fits the latest magnum.
 
@@ -56,10 +60,60 @@ Then you can `./unstack.sh`, and checkout our code with the following steps:
 
 Finally, you can just re-run `./stack.sh` to re-install all services.
 
+####Method 2####
+
+This method suppose that you have just cloned devstack. Then you can do as the following steps:
+
+- **Clone our magnum:** 
+    
+    `cd /opt/stack`
+
+    `git clone https://github.com/Tennyson52/magnum`
+    
+
+- **stack.sh**
+
+    At this time, you can run the scrpit `stack.sh` with the `local.conf` mentioned above. Also, we recommend that copying the $DEVSTACK_HOME/sample/local.sh to the devstack root directory before run the `stack.sh`.
+    
+    If the stack.sh fails with the ERROR of n-cauth, maybe you should rollback the nova code (See ***Bugs and Problems*** at the end).
+
+- **The last step**
+
+    Because our magnum code base is not the latest master branch, you should checkout the previous code of `python-magnumclient`. We suggest you do this in the directory `/opt/stack/python-magnumclient` after doing stack.sh:
+    
+    `git checkout -b sur`
+    
+    `git reset --hard 827de1a09d627548a960b18995e1ee1217182735`  
+
+
 ### Have a try ###
 
-To be continued...
+If you have installed `devstack` successfully, you will be able to run the demo. 
 
+**NOTE: before 2015.10.20, we may often change the code on github for test, it may be failed to run some commands.** 
+
+- **Create a baymodel**
+
+        $ magnum baymodel-create --name SURbaymodel \ 
+                                 --image-id fedora-21-atomic-3 \
+                                 --keypair-id SURTongij \
+                                 --external-network-id public \
+                                 --coe kubernetes
+
+- **Create a bay**
+       
+        $ magnum bay-create --baymodel SURbaymodel --node-count 1 --name SURbay
+ 
+
+- **What happened?**
+
+Until now, the above steps create two senlin profiles respected to  k8s master and k8s minion. Moreover, the bay-create process create a senlin node of k8s master and a senlin cluster with one node of k8s minion.
+
+What we can confirm is that you will have to nova instance, one master and one minion. They form a usable k8s cluster.
+
+You can also try some commands such as `senlin node-list`, `senlin cluster-list`. As we mentioned before, it **MAY** not be fine for the current code.
+
+We will produce a demo video do show more features about our demo, we believe all the typical commands will be ok at that time :)
 
 ### Bugs and Problems ###
 
@@ -85,3 +139,12 @@ To be continued...
 *2015.9.28*
 
 - Using k8s to install Spark is [here](https://github.com/kubernetes/kubernetes/tree/master/examples/spark).
+
+*2015.10.8*
+
+- It seems that the devstack install process will be failed with the latest nova code. If someone catch the ERROR caused by "n-cauth service not start", you can checkout the code in nova root directory like this:
+
+    `git checkout -b sur`
+    
+    `git reset --hard 253cd4bf1765b2cc8f41f4751ac616636485bb4b` 
+
