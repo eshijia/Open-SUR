@@ -38,13 +38,13 @@ Then, create the `local.conf` file in the root directory of devstack. Our local.
 
 *Note:* If you just have single network interface, you should not set something like `PUBLIC_INTERFACE=eth1` in **CentOS 7**. What we have done has not been tested successfully in CentOS 7.
 
-After that, you can `cd /opt/stack/devstack`, then `./stack.sh` to whether you environment is reaaly ok with the typical code base.
+After that, you can `cd /opt/stack/devstack`, then `./stack.sh` to whether you environment is really ok with the typical code base.
 
 ### Checkout our test code ###
 
 ####Method 1####
 
-Note that, method 1 healily relies on you current code of **devstack**. If you are first run our code, I think maybe you should follow method 2.
+Note that, method 1 heavily relies on you current code of **devstack**. If you are first run our code, I think maybe you should follow method 2.
 
 We maintain a test branch of **Magnum** on Github. If you can use devstack with the local.conf above, it proves that you environment fits the latest magnum.
 
@@ -68,7 +68,7 @@ This method suppose that you have just cloned devstack. Then you can do as the f
     
     `cd /opt/stack`
 
-    `git clone https://github.com/Tennyson52/magnum`
+    `git clone https://github.com/Tennyson53/magnum`
     
 
 - **stack.sh**
